@@ -1,5 +1,5 @@
 <ion-content (ionFocus)="focusChanged('focus')" ng-focus="focusChanged('focus')" (ionBlur)="focusChanged('blur')"> 
-<ion-slides loop="true" id="loopSlider" autoHeight="true">
+<ion-slides loop="true" id="loopSlider">
   <ion-slide class="theroot" width="100%"  >	
   <ion-header>			
  <ion-toolbar>
@@ -27,23 +27,19 @@
 	</ion-row>			
  </ion-toolbar> 
   </ion-header>
-   	<div>foobar</div>
-<!--ion-content no-padding -->   
-
-  <ion-refresher slot="fixed"  (ionRefresh)="doRefresh($event);">
+<ion-content >   
+  <ion-refresher (ionRefresh)="doRefresh($event);">
     <ion-refresher-content 
       refreshingSpinner="circles"
       refreshingText="refreshing data, please wait">
     </ion-refresher-content>
  </ion-refresher> 
-
 	<ion-row  *ngFor="let viewer of data.Viewers;let i=index" 
 			[ngClass]="{true:'selected',false:''}[i ==  getselectedRow('viewer')]"                        
 			(dblTap)="addeditClicked(2,i,'viewer','edit')" nowrap
 			(press)="deleterow(i,'viewer')"			 
 			 >
-
-		<ion-col  col-4  (click)="setClickedRow(i,'viewer','Name')">{{viewer.Name}}</ion-col>
+		<ion-col  col-4 class = "colb  center" (click)="setClickedRow(i,'viewer','Name')">{{viewer.Name}}</ion-col>
 		<ion-col  col-3 class="colb   center" (click)="setClickedRow(i,'viewer','Tags')">
 		   <ion-list >
 		     <ion-item no-lines class="center tag-background-transparent" [ngClass]="{true:'tag-text-white',false:''}[i ==  getselectedRow('viewer')]" *ngFor="let tag of viewer.Tags">{{tagfromID(tag)}}</ion-item>
@@ -53,7 +49,7 @@
 		<ion-col col-1 class = " colb  center" (click)="setClickedRow(i,'viewer','RefreshRate')">{{viewer.ImageRefreshRate}}</ion-col>
 		<ion-col col-2 class = "col colb  center" (click)="setClickedRow(i,'viewer','Active')">{{viewer.Active}}</ion-col>
 	</ion-row>
-<!-- /ion-content -->
+</ion-content>
   </ion-slide>
 <!--  for datasources -->
 	<ion-slide class="theroot " width="100%" >
@@ -82,7 +78,7 @@
 	</ion-row>						
 </ion-toolbar>
 </ion-header>
-<ion-content >
+<ion-content>
   <ion-refresher (ionRefresh)="doRefresh($event);">
     <ion-refresher-content 
       refreshingSpinner="circles"
@@ -193,7 +189,7 @@
 </ion-slides>
 </ion-content> 
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar >
 
     <ion-buttons left>
       <button ion-button  (click)="back()">

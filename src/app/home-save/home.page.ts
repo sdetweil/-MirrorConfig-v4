@@ -21,8 +21,8 @@ import {NgZone} from '@angular/core';
 export class HomePage {
  
  // @ViewChild(Slides) sliderComponent: Slides;
- public  d: any;
- public  viewers:Array<any>;
+  d: any;
+  viewers:any;
   datasources:any;
   images:any;
   tags:any;
@@ -39,7 +39,7 @@ export class HomePage {
 	
 	  
   constructor(public actionSheetCtrl: ActionSheetController,
-  							public data: DataProvider,
+  							private  data: DataProvider,
 
   							public modalCtrl: ModalController,
   							//private screenOrientation: ScreenOrientation,
@@ -48,8 +48,8 @@ export class HomePage {
   							private storage: Storage,
   							private zone: NgZone
   							) {
+  		console.log("in home constructor");
   		this.d=data;  		
-  		this.viewers=data.Viewers;
 			
   	  this.modal={};
     this.modaltype=null;
@@ -65,9 +65,8 @@ export class HomePage {
 		this.selectedRow['datasource'] = Constants.NOT_SELECTED;  // initialize our variable to null
 		this.selectedRow['image'] = Constants.NOT_SELECTED;  // initialize our variable to null
 		this.selectedRow['tag'] = Constants.NOT_SELECTED;  // initialize our variable to null
-		setTimeout( ()=> {this.doRefresh(1)}, 2000);
+		//this.doRefresh(0);
 		console.log("in home constructor");
-		
   }
   focusChanged(type)
   {
@@ -79,13 +78,13 @@ export class HomePage {
 			self.d.reloadData(true, 
 				function(error)
 				{
-				// self.zone.run(() =>{
+				 self.zone.run(() =>{
 		   		 self.viewers=self.d.Viewers;
 						self.datasources=self.d.DataSources;
 						self.images=self.d.Images;
 						self.tags=self.d.Tags;
-  				// });
-				// refresher.complete();
+  				 });
+				 refresher.complete();
 				}
 			);
     }
