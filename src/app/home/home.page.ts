@@ -3,24 +3,28 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { DataProvider } from '../services/data/data';
 import { ActionSheetController } from '@ionic/angular';
-//import { Slides } from '@ionic/angular';
+import {IonSlides } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 import { ModalController } from '@ionic/angular';
 import * as Constants from '../services/constants';
 //import { ScreenOrientation } from '@ionic-native/screen-orientation';
+//import { Refresher } from '@ionic/angular';
 
 import {NgZone} from '@angular/core';
 
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.page.html'
+  templateUrl: 'home.page.html',
+  styleUrls: [ 'home.page.scss' ]
 })
 
 export class HomePage {
  
- // @ViewChild(Slides) sliderComponent: Slides;
+@ViewChild('mySlider',{ static: true }) slides:IonSlides;
+//@ViewChild("refresherRef",{ static: true }) refresherRef: Refresher;
+ 
  public  d: any;
  public  viewers:Array<any>;
   datasources:any;
@@ -36,7 +40,9 @@ export class HomePage {
 	modaltype: any;
 	modal: any;
 	parentobject: any;
-	
+	public slideOptions = {
+    loop: true
+  }; 
 	  
   constructor(public actionSheetCtrl: ActionSheetController,
   							public data: DataProvider,
@@ -73,19 +79,22 @@ export class HomePage {
   {
   		console.log("focus changing="+type);
   }
-  doRefresh(refresher){
+  async doRefresh(refresher){
   		var self=this;
-  		if(refresher!==0){
+  		if(refresher!==0){  		
+  		console.log("in refresh")
 			self.d.reloadData(true, 
 				function(error)
 				{
-				// self.zone.run(() =>{
+				 self.zone.run(() =>{
 		   		 self.viewers=self.d.Viewers;
 						self.datasources=self.d.DataSources;
 						self.images=self.d.Images;
 						self.tags=self.d.Tags;
-  				// });
-				// refresher.complete();
+  				 });
+    		if(refresher!==1){  				 
+					refresher.target.complete();
+					}
 				}
 			);
     }
@@ -144,14 +153,16 @@ export class HomePage {
   }
 
   next(){
-  		//this.sliderComponent.slideNext();
+  		this.slides.slideNext();
   }
   back(){
-  	//this.sliderComponent.slidePrev();
+  	this.slides.slidePrev();
   }
    
-  getselectedRow(type){
-		console.log("get selected returning "+this.selectedRow[type]+" type="+type);
+  getselectedRow(type,name){
+		//console.log("get selected returning "+this.selectedRow[type]+" type="+type);
+		if(type== 'viewer' && name )
+		  console.log("'viewer name="+name);
 		return this.selectedRow[type];
   }
    addeditClicked(type, index,page,action)

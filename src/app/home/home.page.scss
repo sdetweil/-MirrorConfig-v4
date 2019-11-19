@@ -1,0 +1,141 @@
+//.page-home{
+.md {
+  visibility: visible;
+}
+.box1, .box2, .box3 , .box4{
+   border: 1px solid blue; 
+}
+.no-padding {
+    padding: 0px !important;
+}
+.header1{
+position: sticky;
+top: 0;
+left: 0;
+z-index: 9999;
+}
+.tag_list { 
+     padding: 0px !important;
+
+		border-style: unset !important;
+
+ }
+ .item-inner{
+border-style: unset !important;
+}
+.header  {
+  display: flex;
+  justify-content: flex-start;
+    background-color: blue;
+}
+.theroot1 {
+  background-color: blue;
+}
+.colb {  
+	border: 1px solid black; 
+}
+.dashed-border {  
+	border: 1px  black dotted; 
+}
+.path {
+width: 800px;
+overflow: auto
+}
+.selected {
+    background-color:grey;
+    color:white;
+    font-weight:bold;
+    text-align:center;
+}
+.not-selected {
+    background-color:white;
+    color:black;
+    font-weight:bold;
+        text-align:center;
+}
+.slider {
+padding-bottom: 10px;
+}
+
+.button-add {
+    background-image: url('../../assets/img/add.png'); /* 16px x 16px */
+    background-color: black;  /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 32px;   
+    width: 32px;         /* make this the size of your image */
+    vertical-align: middle; /* align the text vertically centered */   
+}
+.button-edit {
+    background-image: url('../../assets/img/edit.png'); /* 16px x 16px */
+    background-color: yellow; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 32px;            /* make this the size of your image */
+	  width: 32px;         /* make this the size of your image */    
+    vertical-align: middle; /* align the text vertically centered */
+}
+.md-menu {
+    background-image: url('../../assets/img/edit.png'); /* 16px x 16px */
+    background-color: yellow; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 32px;            /* make this the size of your image */
+	  width: 32px;         /* make this the size of your image */    
+    vertical-align: middle; /* align the text vertically centered */
+}
+
+.main {
+  width: 100%;
+  border: 1px dotted black;
+  display: inline;
+}
+.slide-zoom{
+height:100%;
+overflow-y:scroll
+}
+ul {
+list-style-type: none;
+}
+input {
+  float: left;
+}
+h2 {
+	display:inline;
+	text-align: center;
+	width:100%;
+	float:right;
+}
+.center{
+    vertical-align: middle; 
+    text-align: center;   
+}
+        .padding-0 {
+            padding-left: 0;
+            padding-right: 0;
+        }
+.checkbox{
+    vertical-align: middle;
+    text-align: center;
+}
+.modal-wrapper {
+    position: absolute;
+    width: 90%;
+    height: 50%; 
+    top: 20%;
+    left: 5%;
+  }
+.alignleft {
+	float: left;
+}
+.alignright  {
+  display: flex;
+  justify-content: flex-end;
+}
+//}
