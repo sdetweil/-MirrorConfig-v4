@@ -1,13 +1,13 @@
 <!--div id="mypage" -->
 <ion-content (ionFocus)="focusChanged('focus')" ng-focus="focusChanged('focus')" (ionBlur)="focusChanged('blur')" style="max-height:93%"> 
-<ion-slides [options]="slideOptions" id="loopSlider" #mySlider style="height:100%">
+<ion-slides [options]="slideOptions" id="loopSlider" #mySlider style="height:100%; display:block;">
   <ion-slide class="header" width="100%" style="height:100%; display:block; " >	
   <ion-header >			
  <ion-toolbar>
   <ion-row>
     <ion-col size="1">
 			<button ion-button icon-only (click)="addeditClicked(1,getselectedRow('viewer'),'viewer',{true:'add',false:'edit'}[getselectedRow('viewer')<0])">
-				<ion-icon [ios]="getselectedRow('viewer')<0 ? 'ios-add':'ios-search'" [md]="getselectedRow('viewer')<0 ? 'md-add':'md-search'"></ion-icon > 
+				<ion-icon    [name]="getselectedRow('viewer')==-1 ? 'ios-add':'ios-search'" ></ion-icon > 
 			</button>					
 		</ion-col>
 		<ion-col size="10">Viewers</ion-col> 
@@ -36,18 +36,20 @@
     </ion-refresher-content>
  </ion-refresher > 
 <!-- ion-grid style="back-ground-color:red; ion-grid-padding:0px;"  -->
-	<ion-row  *ngFor="let viewer of data.Viewers;let i=index" class="ion-align-items-center" 
+	<ion-row  *ngFor="let viewer of data.Viewers;let i=index" 
 			[ngClass]="{true:'selected',false:'not-selected'}[i ==  getselectedRow('viewer',viewer.Name)]"                        
 			(dblTap)="addeditClicked(2,i,'viewer','edit')" nowrap
 			(press)="deleterow(i,'viewer')"			 
 			 >
-		<ion-col  size="4" class="colb center"   (click)="setClickedRow(i,'viewer','Name')">{{viewer.Name}}</ion-col>
+		<ion-col  size="4" class="colb center"   (click)="setClickedRow(i,'viewer','Name')">
+	   <span>{{viewer.Name}}</span>
+		</ion-col>
 		<ion-col  size="3" class="colb"  (click)="setClickedRow(i,'viewer','Tags')" >
-		   <ion-list >
-		     <ion-item  lines="none"  [ngClass]="{true:'tag-text-white',false:''}[i ==  getselectedRow('viewer')]" *ngFor="let tag of viewer.Tags" >{{tagfromID(tag)}}</ion-item>
-		   </ion-list>
+		   <ion-list style="padding:0px;"> 
+		     <ion-item  class="colb" lines="none" style="font-size:14px;"   [ngClass]="{true:'tag-text-white',false:''}[i ==  getselectedRow('viewer')]" *ngFor="let tag of viewer.Tags" ><ion-label>{{tagfromID(tag)}}</ion-label></ion-item>
+		   </ion-list >
  		</ion-col>
-		<ion-col size="2" class = " colb center " (click)="setClickedRow(i,'viewer','Advance')">{{viewer.Advance}} </ion-col>
+		<ion-col size="2" class = " colb center" (click)="setClickedRow(i,'viewer','Advance')">{{viewer.Advance}} </ion-col>
 		<ion-col size="1" class = " colb center" (click)="setClickedRow(i,'viewer','RefreshRate')">{{viewer.ImageRefreshRate}}</ion-col>
 		<ion-col size="2" class = " colb center" (click)="setClickedRow(i,'viewer','Active')">{{viewer.Active}}</ion-col>
 	</ion-row>
@@ -62,7 +64,7 @@
   <ion-row>
     <ion-col size="1">
 			<button ion-button  icon-only (click)="addeditClicked(1,getselectedRow('datasource'),'datasource',{true:'add',false:'edit'}[getselectedRow('datasource')<0])">
-				<ion-icon [ios]="getselectedRow('datasource')<0 ? 'ios-add':'ios-search'" [md]="getselectedRow('datasource')<0 ? 'md-add':'md-search'"></ion-icon> 
+				<ion-icon [name]="getselectedRow('datasource')<0 ? 'ios-add':'ios-search'" ></ion-icon> 
 			</button>				
 		</ion-col>
 		<ion-col size="10">Datasources</ion-col> 
@@ -93,10 +95,10 @@
 										  (press)="deleterow(ds,'datasource')"
 										  [ngClass]="{true:'selected',false:''}[ds == getselectedRow('datasource')]"
 										  (dblTap)="addeditClicked(2,ds,'datasource','edit')">
-		 <ion-col size="3" class = "colb " (click)="setClickedRow(ds,'datasource','Name')">{{datasource.Name}}</ion-col>
+		 <ion-col size="3" class = "colb  center" (click)="setClickedRow(ds,'datasource','Name')">{{datasource.Name}}</ion-col>
 		 <ion-col size="2" class = "colb center" (click)="setClickedRow(ds,'datasource','Type')">{{datasource.Type.Type}}</ion-col>
 		 <ion-col size="2" class = "colb center" (click)="setClickedRow(ds,'datasource','Active')">{{datasource.Active}}</ion-col> 
-		 <ion-col size="5" align="left" class="colb path" (click)="setClickedRow(ds,'datasource','Root')">{{datasource.Root}}</ion-col>
+		 <ion-col size="5" align="left" class="colb path center" (click)="setClickedRow(ds,'datasource','Root')">{{datasource.Root}}</ion-col>
 	</ion-row>
 		</ion-content>
   </ion-slide>
@@ -108,7 +110,7 @@
   <ion-row>
     <ion-col size="1">
 			<button ion-button  icon-only (click)="addeditClicked(1,getselectedRow('image'),'image',{true:'add',false:'edit'}[getselectedRow('image')<0])">
-				<ion-icon [ios]="getselectedRow('image')<0 ? 'ios-add':'ios-search'" [md]="getselectedRow('image')<0 ? 'md-add':'md-search'"></ion-icon> 
+				<ion-icon [name]="getselectedRow('image')<0 ? 'ios-add':'ios-search'" ></ion-icon> 
 			</button>				
 		</ion-col>
 		<ion-col size="10">Images</ion-col>
@@ -145,8 +147,8 @@
 		     <ion-item  class="center tag-background-transparent ion-no-margin ion-no-padding" lines="none" [ngClass]="{true:'tag-text-white',false:''}[ii ==  getselectedRow('image')]" *ngFor="let tag of image.Tags">{{tagfromID(tag)}}</ion-item>
 		   </ion-list>
 			</ion-col>		
-		 <ion-col item-content size="3" class = "colb center " (click)="setClickedRow(ii,'image','DataSource')"><ion-col>{{datasourcefromID(image.DataSource)}}</ion-col></ion-col>
-		 <ion-col item-content size="3" class = "colb path" (click)="setClickedRow(ii,'image','PathFromSource')">{{image.PathFromSource}}</ion-col>				 						
+		 <ion-col item-content size="3" class = "colb center " (click)="setClickedRow(ii,'image','DataSource')">{{datasourcefromID(image.DataSource)}}</ion-col>
+		 <ion-col item-content size="3" class = "colb path center" (click)="setClickedRow(ii,'image','PathFromSource')">{{image.PathFromSource}}</ion-col>				 						
 		</ion-row>		
 		</ion-content>				
   </ion-slide>
@@ -160,7 +162,7 @@
   <ion-row>
     <ion-col size="1">
 			<button ion-button  icon-only (click)="addeditClicked(1,getselectedRow('tag'),'tag',{true:'add',false:'edit'}[getselectedRow('tag')<0])">
-				<ion-icon [ios]="getselectedRow('tag')<0 ? 'ios-add':'ios-search'" [md]="getselectedRow('tag')<0 ? 'md-add':'md-search'"></ion-icon> 
+				<ion-icon [name]="getselectedRow('tag')<0 ? 'ios-add':'ios-search'" ></ion-icon> 
 			</button>				
 		</ion-col>
 		<ion-col size="10">Tags</ion-col> 

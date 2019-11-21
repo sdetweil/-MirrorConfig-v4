@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
-import { ViewerModalPage } from './viewer-modal';
+
+import { ViewerModalPageRoutingModule } from './viewer-modal-routing.module';
+import { ViewerModalPage } from './viewer-modal.page';
 
 @NgModule({
-  declarations: [
-    ViewerModalPage,
-  ],
   imports: [
-    IonicModule
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    ViewerModalPageRoutingModule
   ],
+  declarations: [ViewerModalPage], 
+  entryComponents:[ ViewerModalPage],
+  exports:[]
 })
 export class ViewerModalPageModule {}

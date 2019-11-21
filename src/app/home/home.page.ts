@@ -8,8 +8,15 @@ import { Storage } from '@ionic/storage';
 
 import { ModalController } from '@ionic/angular';
 import * as Constants from '../services/constants';
-//import { ScreenOrientation } from '@ionic-native/screen-orientation';
-//import { Refresher } from '@ionic/angular';
+//import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+
+import { AddressModalPage } from '../address-modal/address-modal.page';
+import { ViewerModalPage } from '../viewer-modal/viewer-modal.page';
+import { DatasourceModalPage } from '../datasource-modal/datasource-modal.page';
+import { ImageModalPage } from '../image-modal/image-modal.page';
+
+import { OnInit } from '@angular/core';
+import 'hammerjs';
 
 import {NgZone} from '@angular/core';
 
@@ -20,10 +27,10 @@ import {NgZone} from '@angular/core';
   styleUrls: [ 'home.page.scss' ]
 })
 
-export class HomePage {
- 
+export class HomePage   implements OnInit {
+
+  
 @ViewChild('mySlider',{ static: true }) slides:IonSlides;
-//@ViewChild("refresherRef",{ static: true }) refresherRef: Refresher;
  
  public  d: any;
  public  viewers:Array<any>;
@@ -43,7 +50,7 @@ export class HomePage {
 	public slideOptions = {
     loop: true
   }; 
-	  
+	address: any;
   constructor(public actionSheetCtrl: ActionSheetController,
   							public data: DataProvider,
 
@@ -100,39 +107,41 @@ export class HomePage {
     }
   }
  async menu(){
+ 
    let self=this;
    console.log("entered menu");
-	  let address= await 	self.storage.get("server_ip")//.then(function(address)				{
-			 	 const  res= await self.modalCtrl.create({ component:'AddressModalPage',componentProps:{address:address!=null?address:''}})//.then((res) => {			
-					console.log("dialog created");
+	  let address1= await 	self.storage.get("server_ip")
+ 	  const  res= await self.modalCtrl.create({ component:AddressModalPage,componentProps:{address:address1}})		
+		console.log("dialog created");
 
-					console.log("showing dialog");
-					res.present();  				
-//  				});  			
+		console.log("showing dialog");
+		res.present();  						
   				
-  			 let updatedObject = await res.onDidDismiss()// .then((updatedObject)  => 	{
-			 		 		// Do things with data coming from modal, for instance :
-			 		 	if(updatedObject != undefined)
-			 		 	{
-							 if(updatedObject['address']!=undefined)
-							 {
-							 		console.log("the server address specified was "+updatedObject['address']);
-							 		self.storage.set("server_ip",updatedObject['address']);
-							 }
-							 else
-							 	if(updatedObject['action']=='delete')
-								 	self.storage.remove("server_ip");
-					 	 }	 
-					 	 else
-					 	 {
-					 	   console.log ("return from dialog, no data")
-					 		 //reject("user canceled dialog, no data");
-					 	 }
-					 	 
-				//	})
-  	  //})
+		let updatedObject = await res.onDidDismiss()
+		console.log("back from menu, obj="+JSON.stringify(updatedObject));
+	 	// Do things with data coming from modal, for instance :
+	 	if(updatedObject != undefined && updatedObject.data !=undefined )
+	 	{
+			if(updatedObject.data['action']=='save')
+			{
+					if(updatedObject.data['address']!=undefined)
+			 		{
+				 		console.log("the server address specified was "+updatedObject.data['address']);
+				 		self.storage.set("server_ip",updatedObject.data['address']);
+				 	}
+			 }
+			 else 	if(updatedObject.data['action']=='delete')
+			 {
+				 	self.storage.remove("server_ip");
+			}
+ 	 }	 
+ 	 else
+ 	 {
+ 	   console.log ("return from dialog, no data")
+ 	 }			 	 
+
   }
-  ionViewDidLoad() 
+  ngOnInit() 
   {
     console.log('ionViewDidLoad HomePage');
     // set to landscape
@@ -151,7 +160,7 @@ export class HomePage {
 			this.tags=this.d.Tags;
 			});
   }
-
+selectedviewer
   next(){
   		this.slides.slideNext();
   }
@@ -161,11 +170,11 @@ export class HomePage {
    
   getselectedRow(type,name){
 		//console.log("get selected returning "+this.selectedRow[type]+" type="+type);
-		if(type== 'viewer' && name )
-		  console.log("'viewer name="+name);
+	//	if(type== 'viewer' && name )
+	//	  console.log("'viewer name="+name);
 		return this.selectedRow[type];
   }
-   addeditClicked(type, index,page,action)
+  async  addeditClicked(type, index,page,action)
   {
 		console.log(action+" button clicked on page "+page+" and row="+index);  
 		if((type==2 && index==this.selectedRow[page]) || (type==1 && index!=this.selectedRow[page]) )
@@ -199,7 +208,7 @@ export class HomePage {
 							this.saveobject[page]=null;			
 						}
 						this.parentobject=this.thisviewer;		
-						this.modal[page]=this.modalCtrl.create({ component: 'ViewerModalPage',componentProps:{type:this.modaltype,object:this.thisviewer,parent:this.parentobject}})				
+						this.modal[page]=await this.modalCtrl.create({ component: ViewerModalPage,componentProps:{type:this.modaltype,object:this.thisviewer,parent:this.parentobject}})				
 					}
 					break;
 			case 'datasource':
@@ -222,7 +231,7 @@ export class HomePage {
 							this.saveobject[page]=null;			
 						}
 						this.parentobject=this.thisdatasource;
-           	this.modal[page]=this.modalCtrl.create({component:'DataSourceModalPage',componentProps:{type:this.modaltype,object:this.thisdatasource,parent:this.parentobject}}); 
+           	this.modal[page]=await this.modalCtrl.create({component:DatasourceModalPage,componentProps:{type:this.modaltype,object:this.thisdatasource,parent:this.parentobject}}); 
 					}
 					break;			
 			case 'image':
@@ -245,7 +254,7 @@ export class HomePage {
 						}
 						this.parentobject=this.thisimage;
 					}
-						this.modal[page]=this.modalCtrl.create({component:'ImageModalPage',componentProps:{type:this.modaltype,object:this.thisimage,parent:this.parentobject}});
+						this.modal[page]=await this.modalCtrl.create({component:ImageModalPage,componentProps:{type:this.modaltype,object:this.thisimage,parent:this.parentobject}});
 					break;
 			case 'tag':
 					{
@@ -263,7 +272,7 @@ export class HomePage {
 							this.saveobject[page]=null;
 						}
 						this.parentobject=this.thistag;
-							this.modal[page]=this.modalCtrl.create({ component:'TagModalPage',componentProps:{type:this.modaltype,object:this.thistag,parent:this.parentobject}});
+							this.modal[page]=await this.modalCtrl.create({ component:'TagModalPage',componentProps:{type:this.modaltype,object:this.thistag,parent:this.parentobject}});
 					}
 					break					
 					
@@ -311,7 +320,7 @@ export class HomePage {
 		 	 this.selectedRow[type] = i;
 		  })
   }
-	deleterow(index,type)
+async	deleterow(index,type)
 	{
 			console.log("delete pressed, row="+index+" for type="+type);
 			var object=null;
@@ -374,7 +383,7 @@ export class HomePage {
 					}								
 					break;																								
 			}
-			this.confirmDelete(type,object);
+			await this.confirmDelete(type,object);
 
 	}
 	confirmDelete(type,object) 
