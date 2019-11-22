@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { ModalController, NavParams} from '@ionic/angular';
-import { DataProvider } from '../services/data/data';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ViewController } from 'ionic-angular';
+
+import { DataProvider } from '../../providers/data/data';
 /**
  * Generated class for the ViewerModalPage page.
  *
@@ -8,6 +10,7 @@ import { DataProvider } from '../services/data/data';
  * Ionic pages and navigation.
  */
 
+@IonicPage()
 @Component({
   selector: 'page-viewer-modal',
   templateUrl: 'viewer-modal.html'
@@ -16,9 +19,9 @@ import { DataProvider } from '../services/data/data';
 export class ViewerModalPage {
   thisviewer: any;
   modaltype: any;
-  constructor(//public navCtrl: NavController, 
+  constructor(public navCtrl: NavController, 
   							public navParams: NavParams,
-  							public viewCtrl: ModalController,
+  							public viewCtrl: ViewController,
   							private data:DataProvider
   							) {
     this.modaltype=navParams.get("type");

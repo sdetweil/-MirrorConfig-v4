@@ -55,8 +55,8 @@
               <ion-col col-2 > 
             		<label for="vroot"> Root:</label>
             	</ion-col>
-							<ion-col col-10 >              
-                <span id="vroot"  class="dashed-border">{{thisdatasource.Root}}</span>
+							<ion-col col-10 class="dashed-border">              
+                <span id="vroot" (press)="doubleClick(thisdatasource,true)" >{{thisdatasource.Root}}</span>
             	</ion-col>    
             	</ion-row>
         </ion-grid>

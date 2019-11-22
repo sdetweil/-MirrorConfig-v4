@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-//import { IonicPage, NavController, NavParams } from '@angular/core';
-import { DataProvider } from '../services/data/data';
-import {ModalController, NavParams } from '@ionic/angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DataProvider } from '../../providers/data/data';
+import { ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the TagModalPage page.
@@ -10,7 +10,7 @@ import {ModalController, NavParams } from '@ionic/angular';
  * Ionic pages and navigation.
  */
 
-//@IonicPage()
+@IonicPage()
 @Component({
   selector: 'page-tag-modal',
   templateUrl: 'tag-modal.html'
@@ -20,10 +20,7 @@ export class TagModalPage {
   //d: any;
   thistag: any;
   modaltype: any;
-  constructor(//public navCtrl: NavController, 
-  						public navParams: NavParams, 
-  						private data: DataProvider,
-  						public viewCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private data: DataProvider,public viewCtrl: ViewController) {
     //this.d=data;
     this.modaltype=navParams.get("type");
     this.thistag=navParams.get("object");

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ModalController, NavParams} from '@ionic/angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ViewController} from 'ionic-angular';
 
 /**
  * Generated class for the AddressModalPage page.
@@ -8,16 +9,16 @@ import { ModalController, NavParams} from '@ionic/angular';
  * Ionic pages and navigation.
  */
 
+@IonicPage()
 @Component({
   selector: 'page-address-modal',
   templateUrl: 'address-modal.html',
 })
 export class AddressModalPage {
   address: string='';
-  constructor(//public navCtrl: NavController, 
-  						  public navParams:   NavParams,
-  						  public viewCtrl: ModalController) {
-  						  
+  constructor(public navCtrl: NavController, 
+  						  public navParams: NavParams,
+  						  public viewCtrl: ViewController) {
   						  var x = navParams.get("address")
 							console.log("previously saved address is ="+x);
   						  	this.address=(x !=undefined)?x.toString():'';  						  	

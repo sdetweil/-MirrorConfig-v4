@@ -31,10 +31,10 @@
               </ion-col>
             </ion-row>            
             <ion-row>
-              <ion-col col-2 > 
+              <ion-col col-2 >
             		<label for="vtags"> Tags:</label>
             	</ion-col>
-							<ion-col>							  	 
+							<ion-col class="dashed-border">							  	 
  									<ion-select  title="Tags" multiple="true"  id="vtags" [(ngModel)]="thisviewer.Tags" 
  											[compareWith]="checkSelectedTag" okText="Okay" cancelText="Dismiss"><ion-label>Tags</ion-label>
 										<ion-select-option *ngFor="let tag of data.Tags" value="{{tag._id}}">{{tag.value}}</ion-select-option>    
@@ -46,7 +46,7 @@
             		<label for="vdays">Days:</label>      
             	</ion-col>
 							<ion-col col-2 class="dashed-border">
-         				 <input [(ngModel)]="thisviewer.Advance" type="number" id="vdays" class="dashed-border"/>
+         				 <input [(ngModel)]="thisviewer.Advance" type="number" id="vdays" class="dashed-border" size="3"/>
             	</ion-col>
 						</ion-row>
             <ion-row>
@@ -54,7 +54,7 @@
             		<label for="vrate"> Rate:</label>
             	</ion-col >
 							<ion-col class="dashed-border">
-                <input [(ngModel)]="thisviewer.ImageRefreshRate" type="number" id="vrate" class="dashed-border"/>
+                <input [(ngModel)]="thisviewer.ImageRefreshRate" type="number" id="vrate" class="dashed-border" size="3"/>
             	</ion-col>
            	</ion-row>
             <ion-row>
@@ -75,7 +75,7 @@
           		<ion-col col-8>
           		</ion-col>
           		<ion-col col-2 >
-          			<button (click)="saveModal()" float-right><ion-icon md="md-save" ></ion-icon>Save </button>
+          			<button (click)="saveModal()" ion-float-right><ion-icon md="md-save" ></ion-icon>Save </button>
              	</ion-col>
            	</ion-row> 
 </ion-footer>

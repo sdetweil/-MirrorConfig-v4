@@ -36,10 +36,10 @@
               <ion-col col-2 > 
             		<label for="vtags"> Tags:</label>
             	</ion-col>
-							<ion-col col-8>
+							<ion-col col-8 class="dashed-border">
  									<ion-select  title="Tags" multiple="true"  id="vtags" [(ngModel)]="thisimage.Tags" 
  											[compareWith]="checkSelectedTag" okText="Okay" cancelText="Dismiss"><ion-label>Tags</ion-label>
-										<ion-select-option  *ngFor="let tag of data.Tags" value="{{tag._id}}">{{tag.value}}</ion-select-option>    
+										<ion-select-option  class="dashed-border" *ngFor="let tag of data.Tags" value="{{tag._id}}">{{tag.value}}</ion-select-option>    
 									</ion-select>
             	</ion-col>
 						</ion-row>            
@@ -48,20 +48,19 @@
               <ion-col col-2> 
             		<label for="vsource"> Source:</label>
             	</ion-col>
-							<ion-col col-8 >
+							<ion-col col-8 class="dashed-border" >
 								<ion-select  style="width:85%;" id="vsource" [(ngModel)]="thisimage.DataSource"
 											[compareWith]="checkSelectedSource" okText="Okay" cancelText="Dismiss" (ionChange)='f()'>    
 										<ion-select-option  *ngFor="let source of data.DataSources" value="{{source._id}}">{{source.Name}}</ion-select-option>
 								</ion-select>
             	</ion-col>
-						</ion-row>
-           	           
-            <ion-row (dblTap)="doubleClick(thisimage,true)" (dblTap)="doubleClick(thisimage,true)"> 
+						</ion-row>           	           
+            <ion-row  (dblTap)="doubleClick(thisimage,true)" (press)="doubleClick(thisimage,true)"> 
               <ion-col col-2 > 
             		<label for="vpath"> Path from Source:</label>
             	</ion-col>
-							<ion-col col-10 >
-								<span id="vpath"  class="dashed-border">{{thisimage.PathFromSource}}</span>               
+							<ion-col col-10  class="dashed-border" >
+								<span id="vpath" (press)="doubleClick(thisdatasource,true)">{{thisimage.PathFromSource}}</span >            
             	</ion-col>
            	</ion-row>
 

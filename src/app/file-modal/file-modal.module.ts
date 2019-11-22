@@ -1,13 +1,22 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
-import { FileModalPage } from './file-modal';
+
+import { FileModalPageRoutingModule } from './file-modal-routing.module';
+
+import { FileModalPage } from './file-modal.page';
 
 @NgModule({
-  declarations: [
-    FileModalPage,
-  ],
   imports: [
-    IonicModule
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    FileModalPageRoutingModule
   ],
+  declarations: [], 
+  entryComponents:[FileModalPage],
+  exports:[]
 })
 export class FileModalPageModule {}

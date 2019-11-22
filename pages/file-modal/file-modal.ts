@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavParams } from '@ionic/angular';
-import { DataProvider } from '../services/data/data';
-import { ModalController } from '@ionic/angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DataProvider } from '../../providers/data/data';
+import { ViewController } from 'ionic-angular';
 import {NgZone} from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController } from 'ionic-angular';
 /**
  * Generated class for the FileModalPage page.
  *
@@ -11,6 +11,7 @@ import { LoadingController } from '@ionic/angular';
  * Ionic pages and navigation.
  */
 
+@IonicPage()
 @Component({
   selector: 'page-file-modal',
   templateUrl: 'file-modal.html'
@@ -27,10 +28,10 @@ export class FileModalPage {
   parentobject: any;
   parentsource:any;
   dialog_title:any;
-  constructor( 
+  constructor(public navCtrl: NavController, 
   										public navParams: NavParams, 
   										private data: DataProvider,
-  										public modalCtrl: ModalController,
+  										public viewCtrl: ViewController,
   										private zone: NgZone,
   										public loading: LoadingController) {
     this.d=data;
@@ -48,40 +49,37 @@ export class FileModalPage {
 
 
     }
-  
-  foobar() {
+  ionViewDidLoad() {
     console.log('ionViewDidLoad FileModalPage');
-    
 				var self= this;
-				self.loading.create({
-    				message: 'updating file list...'
-     			}).then((res) => {
-      		res.present()
+				var loadmsg=self.loading.create({
+    				content: 'updating file list...',
+     			});
+			 	loadmsg.present()
 			 		.then(function() {
 						self.initFileList(self.thisobject,null)
 							.then(
 								function(){
-									res.dismiss();
+									loadmsg.dismiss();
 									//self.parentpath=workpath;
 								},
 								function(foo){ 
 									console.log("error="+foo);
-									res.dismiss();
+									loadmsg.dismiss();
 								}
 							)
 							.catch(function(err){
 								console.log("catch error from get files="+err);
-								res.dismiss();
+								loadmsg.dismiss();
 							});
 						},
 						function(f){ console.log("f="+f);}
 					)
 					.catch(function(err){
 						console.log("loading error!="+err);
-						res.dismiss();
+						loadmsg.dismiss();
 						}
 					);
-					})
   }
   doubleClick(index,item)
   {
@@ -133,44 +131,44 @@ export class FileModalPage {
 			if(workpath!==this.parentpath)
 			{
 				var self= this;
-				self.loading.create({
-    				message: 'updating file list...'
-     			}).then((res)=>{
-			 	res.present()
+				var loadmsg=self.loading.create({
+    				content: 'updating file list...',
+     			});
+			 	loadmsg.present()
 			 		.then(function() {
 						self.initFileList(self.parentobject,workpath)
 							.then(
 								function(){
-									res.dismiss();
+									loadmsg.dismiss();
 									self.parentpath=workpath;
 								},
 								function(foo){ 
 									console.log("error="+foo);
-									res.dismiss();
+									loadmsg.dismiss();
 								}
 							)
 							.catch(function(err){
 								console.log("catch error from get files="+err);
-								res.dismiss();
+								loadmsg.dismiss();
 							});
 						},
 						function(f){ console.log("f="+f);}
 					)
 					.catch(function(err){
 						console.log("loading error!="+err);
-						res.dismiss();
+						loadmsg.dismiss();
 						}
 					); 			  
-			  })
+			}
   		}
   }
- }
+ 
   	closeModal() {
-		this.modalCtrl.dismiss();
+		this.viewCtrl.dismiss();
 	}
 	saveModal()
 	{
-		this.modalCtrl.dismiss({type:this.modaltype,data:this.thisobject,path:this.parentpath,files:this.files}/* some data, thisdatasource has been updated*/);
+		this.viewCtrl.dismiss({type:this.modaltype,data:this.thisobject,path:this.parentpath,files:this.files}/* some data, thisdatasource has been updated*/);
 	}
 	  setClickedRow(index,type,column){      //function that sets the value of selectedRow to current index
 			var i=this.files[index].selected;

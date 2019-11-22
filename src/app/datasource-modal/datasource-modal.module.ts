@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { DatasourceModalPageRoutingModule } from './datasource-modal-routing.module';
 import { DatasourceModalPage } from './datasource-modal.page';
+import { FileModalPage} from '../file-modal/file-modal.page';
 
 
 @NgModule({
@@ -15,8 +16,8 @@ import { DatasourceModalPage } from './datasource-modal.page';
     IonicModule,
     DatasourceModalPageRoutingModule
   ],
-  declarations: [DatasourceModalPage], 
-  entryComponents:[ DatasourceModalPage],
-  exports:[]
+  declarations: [DatasourceModalPage,FileModalPage], 
+  entryComponents:[ DatasourceModalPage,FileModalPage],
+  exports:[FileModalPage]
 })
 export class DatasourceModalPageModule {}

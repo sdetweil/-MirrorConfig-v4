@@ -8,6 +8,8 @@ import {NgZone} from '@angular/core';
   templateUrl: './datasource-modal.page.html',
   styleUrls: ['./datasource-modal.page.scss'],
 })
+
+
 export class DatasourceModalPage implements OnInit {
 
   ngOnInit() {
@@ -18,6 +20,7 @@ export class DatasourceModalPage implements OnInit {
   parentobject:any;
   saveobject: any;
   modal: any;
+  FileModalPage:any;
 
   constructor(  public navParams: NavParams,
   						  private data: DataProvider,
@@ -27,6 +30,7 @@ export class DatasourceModalPage implements OnInit {
     this.modaltype=navParams.get("type");
     this.thisdatasource=navParams.get("object");
     this.parentobject=navParams.get("parent");
+    this.FileModalPage=navParams.get("filedlg");
     this.saveobject={};
     this.modal={};
 
@@ -51,27 +55,35 @@ export class DatasourceModalPage implements OnInit {
 			if(opendialog)
 			{
 				this.saveobject['file']=null;
-				var modal=await this.modalCtrl.create( { component:'FileModalPage', componentProps:{type:this.modaltype,object:object,dialog_title:"Datasource: select folder"}});
-				
+				let modal=await this.modalCtrl.create( { component:this.FileModalPage, componentProps:{type:this.modaltype,object:object,dialog_title:"Datasource: select folder"}});
+				console.log("file modal opening");
+		    await modal.present();					
 				console.log("file modal created");
 				
-				var updatedObject= await modal;
+				 let updatedObject= await modal.onDidDismiss();
 			 		 // Do things with data coming from modal, for instance :
-			 		 if(updatedObject != undefined)
+			 		 if(updatedObject != undefined && updatedObject.data != undefined)
 			 		 {
-				 		 console.log("return from dialog type="+updatedObject['type']+" data="+JSON.stringify(updatedObject['data'])+" path="+updatedObject['path']);
-				 		 		if(updatedObject['path'].endsWith('*'))
-				 		 		   updatedObject['path']=updatedObject['path'].substring(0,updatedObject['path'].length-1);
-				 		 		updatedObject['data'].Root=updatedObject['path'];
+			 		   if(updatedObject.data.action=='save'){
+				 		 console.log("return from dialog type="+updatedObject.data.type+" data="+JSON.stringify(updatedObject.data)+" path="+updatedObject.data.path);
+				 		 		if(updatedObject.data.path.endsWith('*'))
+				 		 		   updatedObject.data.path=updatedObject.data.path.substring(0,updatedObject.data.path.length-1);
+				 		 		 for(let file of updatedObject.data.files){
+				 		 		    if(file.checked){
+				 		 		        updatedObject.data.path=updatedObject.data.path.concat(file.name+"/*");
+				 		 		       break;
+				 		 		    }
+				 		 		 }
+				 		 		updatedObject.data.data.Root=updatedObject.data.path;
 				 		 		var self=this;
 				 		 		this.zone.run(() =>{
-				 		 		  self.thisdatasource=updatedObject['data'];
+				 		 		  self.thisdatasource=updatedObject.data.data;
 				 		 		})
+				 		 }
 				 	 }
 				 	 else
 				 	   console.log ("return from dialog, no data")
-				console.log("file modal opening");
-				//await modal.present();	
+
 				console.log("file modal open");
 			}				
   }

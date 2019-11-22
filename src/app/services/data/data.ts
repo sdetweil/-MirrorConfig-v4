@@ -359,36 +359,19 @@ export class DataProvider {
   getFiles(urlstring)
   {
     var self=this;    
-    var promise = new Promise(function(resolve, reject) {
+ 		return new Promise((resolve, reject)  =>{
     
   		var u='http://'+self.ourserveraddress+'/files?'+encodeURI(urlstring);
   		console.log("file url="+u);
- 	 	self.http.get(u,{},{})
-			.then(function(response)
+ 	 	  self.http.get(u).subscribe(data => 
 				{				
-				  console.log("file list retrieved  status="+response.status);
-					if(response.status==200)
-					{
-						let files=[];
-						if(response.data.length>2)
-						  files= JSON.parse(response.data);
-						console.log("file list retrieved size="+files.length);
-						resolve(files);
-					}
-					else
-					{
-						console.log("files get failed rc="+response.status);
-						reject(response);
-					}
+					console.log("file list retrieved size="+data.length);
+					resolve(data);
 				}
-			).catch(function(errormsg)
-				{
-					console.log("http files get exception="+errormsg);
-					reject(errormsg);
-				});
+			)
 		});
 		
-  		return promise;
+
   }
 	
 }
