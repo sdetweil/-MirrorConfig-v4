@@ -1,0 +1,1 @@
+ionic cordova run android --address 192.168.2.38 --device -l -c --verbose --no-native-run
